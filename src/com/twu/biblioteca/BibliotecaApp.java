@@ -7,12 +7,14 @@ import java.util.Arrays;
 public class BibliotecaApp {
 
     public static boolean isValid(String line) {
-        String[] actions = {"list", "checkout", "return"};
+        String[] actions = {"list", "checkout", "return", "account"};
         String[] types = {"book", "movie"};
 
         String[] arguments = line.split(" ");
 
-        if (arguments.length != 2) {
+        if (arguments.length == 1 && arguments[0].equals("account")) {
+            return true;
+        } else if (arguments.length!=2) {
             return false;
         } else {
             if (Arrays.asList(actions).contains(arguments[0]) && Arrays.asList(types).contains(arguments[1])){
@@ -28,6 +30,8 @@ public class BibliotecaApp {
     public static void main(String[] args) {
 
         User[] users = new User[]{
+
+                new User("admin",   "password", "joh  smith", "joh@mail.com"),
                 new User("123-456", "hunter2", "joh  smith", "joh@mail.com"),
                 new User("123-457", "hunter3", "bob  smith", "bsmith@mail.com")
         };
@@ -64,6 +68,7 @@ public class BibliotecaApp {
                                 "list     [movie/book] : List Books/Movies \n" +
                                 "checkout [movie/book] : Checkout a book/movie \n" +
                                 "return   [movie/book] : Return a book/movie \n" +
+                                "account               : view my details\n"+
                                 "logout                : logout \n");
                         line = sc.nextLine();
                         while (!line.equals("logout")) {
@@ -71,43 +76,48 @@ public class BibliotecaApp {
                                 System.out.println("Error! That's not a valid code");
                             } else {
                                 String action = line.split(" ")[0];
-                                String category = line.split(" ")[1];
 
-                                if (action.equals("list")) {
-                                    if (category.equals("book")) {
-                                        System.out.print(lib.printBooks());
-                                    } else {
-                                        System.out.println(lib.printMovies());
-                                    }
-                                } else if (action.equals("checkout") || action.equals("return")) {
+                                if(action.equals("account")) {
+                                    System.out.println(user);
+                                } else {
+                                    String category = line.split(" ")[1];
 
-
-                                    System.out.println("Enter the title of the " + category + " you want to " + action);
-
-                                    Scanner ts = new Scanner(System.in);
-                                    String title = ts.nextLine();
-
-                                    Item i;
-                                    if (category.equals("book")) {
-                                        i = lib.findBook(title);
-                                    } else {
-                                        i = lib.findMovie(title);
-                                    }
-
-                                    if (action.equals("checkout")) {
-                                        if (i == null || !i.checkOut()) {
-                                            System.out.println("That " + category + " is not available.");
+                                    if (action.equals("list")) {
+                                        if (category.equals("book")) {
+                                            System.out.print(lib.printBooks());
                                         } else {
-                                            System.out.println("Thank you! Enjoy the " + category);
+                                            System.out.println(lib.printMovies());
                                         }
-                                    } else {
-                                        if (i == null || !i.checkIn()) {
-                                            System.out.println("That is not a valid "+category+" to return ");
-                                        } else {
-                                            System.out.println("Thank you for returning your book");
-                                        }
-                                    }
+                                    } else if (action.equals("checkout") || action.equals("return")) {
 
+
+                                        System.out.println("Enter the title of the " + category + " you want to " + action);
+
+                                        Scanner ts = new Scanner(System.in);
+                                        String title = ts.nextLine();
+
+                                        Item i;
+                                        if (category.equals("book")) {
+                                            i = lib.findBook(title);
+                                        } else {
+                                            i = lib.findMovie(title);
+                                        }
+
+                                        if (action.equals("checkout")) {
+                                            if (i == null || !i.checkOut()) {
+                                                System.out.println("That " + category + " is not available.");
+                                            } else {
+                                                System.out.println("Thank you! Enjoy the " + category);
+                                            }
+                                        } else {
+                                            if (i == null || !i.checkIn()) {
+                                                System.out.println("That is not a valid " + category + " to return ");
+                                            } else {
+                                                System.out.println("Thank you for returning your book");
+                                            }
+                                        }
+
+                                    }
                                 }
                             }
                             line = sc.nextLine();

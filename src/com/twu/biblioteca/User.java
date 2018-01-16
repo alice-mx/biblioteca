@@ -20,4 +20,8 @@ public class User {
     public String getId() {
         return id;
     }
+
+    public String toString() {
+        return "ID: " + id + "\n" + "NAME: " + name + "\n" + "EMAIL: " + email + "\n";
+    }
 }
