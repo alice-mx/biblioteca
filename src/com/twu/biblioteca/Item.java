@@ -3,7 +3,7 @@ package com.twu.biblioteca;
 public class Item {
     protected String title;
     protected String year;
-    protected boolean checkedOut;
+    protected User checkedOutTo;
 
 
     public String getTitle() {
@@ -15,27 +15,24 @@ public class Item {
     }
 
     public boolean getCheckedOut() {
-        return this.checkedOut;
+        return this.checkedOutTo !=null;
     }
 
-    public void setCheckedOut(boolean checkedOut) {
-        this.checkedOut = checkedOut;
-    }
 
-    public boolean checkOut() {
-        if(checkedOut) {
+    public boolean checkOut(User user) {
+        if(checkedOutTo != null) {
             return false;
         } else {
-            checkedOut = true;
+            checkedOutTo = user;
             return true;
         }
     }
 
     public boolean checkIn() {
-        if(!checkedOut) {
+        if(checkedOutTo == null) {
             return false;
         } else {
-            checkedOut = false;
+            checkedOutTo = null;
             return true;
         }
     }

@@ -5,12 +5,12 @@ public class Book extends Item
     private String author;
     private String isbn;
 
-    public Book(String title, String author, String isbn, String year, boolean checkedOut) {
+    public Book(String title, String author, String isbn, String yea) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.year = year;
-        this.checkedOut = checkedOut;
+        this.checkedOutTo = null;
     }
 
     public String getIsbn() {
@@ -23,7 +23,9 @@ public class Book extends Item
 
 
     public String toString() {
-        return title + ", " +author+", "+year+", "+isbn;
+
+        String id = (checkedOutTo == null ? "NO" : checkedOutTo.getId());
+        return title + ", " +author+", "+year+", "+isbn+", "+id;
     }
 
 

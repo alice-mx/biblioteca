@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class BibliotecaApp {
 
     public static boolean isValid(String line) {
-        String[] actions = {"list", "checkout", "return", "account"};
+        String[] actions = {"list", "all", "checkout", "return", "account"};
         String[] types = {"book", "movie"};
 
         String[] arguments = line.split(" ");
@@ -37,15 +37,15 @@ public class BibliotecaApp {
         };
 
         Book[] books = new Book[]{
-                new Book("Barry Totter", "M.K. Bowling", "1234567890123", "2012", false),
-                new Book("Hungry Games", "A.B. Smith", "1234567890124", "2015", true),
-                new Book("Where the Mild Things Are", "Boris Sendlack", "1234567890125", "2014", false)
+                new Book("Barry Totter", "M.K. Bowling", "1234567890123", "2012"),
+                new Book("Hungry Games", "A.B. Smith", "1234567890124", "2015"),
+                new Book("Where the Mild Things Are", "Boris Sendlack", "1234567890125", "2014")
         };
 
         Movie[] movies = new Movie[]{
-                new Movie("Bar  Wars", "JJ Abrams", 3, "2012", false),
-                new Movie("The Dogfather", "A.B. Jones", 4, "2015", true),
-                new Movie("Thor", "BA James", 5, "2014", false)
+                new Movie("Bar  Wars", "JJ Abrams", 3, "2012"),
+                new Movie("The Dogfather", "A.B. Jones", 4, "2015"),
+                new Movie("Thor", "BA James", 5, "2014")
         };
 
 
@@ -63,9 +63,11 @@ public class BibliotecaApp {
                     String pw = sc.nextLine();
 
                     if (user.logIn(pw)) {
+
                         System.out.println(" Welcome! Type a word to perform an action" +
                                 "\n" +
-                                "list     [movie/book] : List Books/Movies \n" +
+                                "list     [movie/book] : List available Books/Movies \n" +
+                                "all      [movie/book] : List all books and movies\n" +
                                 "checkout [movie/book] : Checkout a book/movie \n" +
                                 "return   [movie/book] : Return a book/movie \n" +
                                 "account               : view my details\n"+
@@ -81,8 +83,13 @@ public class BibliotecaApp {
                                     System.out.println(user);
                                 } else {
                                     String category = line.split(" ")[1];
-
-                                    if (action.equals("list")) {
+                                    if (action.equals("all")) {
+                                        if (category.equals("book")) {
+                                            System.out.print(lib.printAllBooks());
+                                        } else {
+                                            System.out.println(lib.printAllMovies());
+                                        }
+                                    }else if (action.equals("list")) {
                                         if (category.equals("book")) {
                                             System.out.print(lib.printBooks());
                                         } else {
@@ -104,7 +111,7 @@ public class BibliotecaApp {
                                         }
 
                                         if (action.equals("checkout")) {
-                                            if (i == null || !i.checkOut()) {
+                                            if (i == null || !i.checkOut(user)) {
                                                 System.out.println("That " + category + " is not available.");
                                             } else {
                                                 System.out.println("Thank you! Enjoy the " + category);

@@ -5,12 +5,12 @@ public class Movie extends Item {
     private String director;
     private int rating;
     private String year;
-    public Movie(String title, String director, int rating, String year, boolean checkedOut) {
+    public Movie(String title, String director, int rating, String year) {
         this.title = title;
         this.director = director;
         this.rating = rating;
         this.year = year;
-        this.checkedOut = checkedOut;
+        this.checkedOutTo = null;
 
     }
 
@@ -27,6 +27,7 @@ public class Movie extends Item {
     }
 
     public String toString() {
-        return title+", "+director+", "+year+", "+rating;
+        String id = (checkedOutTo == null ? "NO" : checkedOutTo.getId());
+        return title+", "+director+", "+year+", "+rating+", "+id;
     }
 }

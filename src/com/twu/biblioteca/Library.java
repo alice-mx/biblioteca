@@ -34,8 +34,29 @@ public class Library {
         return cos.toArray(b);
     }
 
+    public String printAllBooks() {
+        String list = "TITLE, AUTHOR, ISBN, YEAR, CHECKED OUT\n";
+
+        for (Item book : books) {
+            list = list + book + "\n";
+        }
+
+        return list;
+
+    }
+
+    public String printAllMovies() {
+        String list = "TITLE, DIRECTOR, YEAR, STARS, CHECKED OUT\n";
+
+        for (Item movie : movies) {
+            list = list + movie + "\n";
+        }
+
+        return list;
+
+    }
     public String printBooks() {
-        String list = "TITLE, AUTHOR, ISBN, YEAR\n";
+        String list = "TITLE, AUTHOR, ISBN, YEAR, CHECKED OUT\n";
 
         for (Item book : getCheckedInItems(books)) {
             list = list + book + "\n";
@@ -45,7 +66,7 @@ public class Library {
     }
 
     public String printMovies() {
-        String list = "TITLE, DIRECTOR, YEAR, STARS\n";
+        String list = "TITLE, DIRECTOR, YEAR, STARS, CHECKED OUT\n";
         for (Item movie : getCheckedInItems(movies)) {
             list = list + movie + "\n";
         }
